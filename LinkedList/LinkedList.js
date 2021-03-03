@@ -3,7 +3,14 @@ class LinkedList {
     #last;
 
     addFirst(node) {
-        node.next = this.#first;
+        const nodeToAdd = new LinkedListNode(node);
+        if (!this.#last) {
+            this.#first = nodeToAdd;
+            this.#last = nodeToAdd;
+        } else {
+            nodeToAdd.next = this.#first;
+            this.#first = nodeToAdd;
+        }
     }
     
     addLast(node) {
@@ -18,19 +25,42 @@ class LinkedList {
     }
 
     deleteFirst() {
-        this.#first.next = this.#first;
-        this.#first = null;
+        let temp = this.#first;
+        this.#first = this.#first.next;
+        temp = null;
     }
     
     deleteLast() {
         let current = this.#first;
         let beforeCurrent = this.#first;
-        while (current.next) {
-            beforeCurrent = current;
-            current = current.next;
+        if (current) {
+            while (current.next) {
+                beforeCurrent = current;
+                current = current.next;
+            }
+            beforeCurrent.next = null;
         }
+    }
 
-        beforeCurrent.next = null;
+    contains(node) {
+        const nodeToFind = new LinkedListNode(node);
+    }
+
+    indexOf(node) {
+        const nodeToFind = new LinkedListNode(node);
+        let temp = this.#first;
+        let index = 0;
+        if (temp) {
+            if (temp.value === nodeToFind.value)
+                return index;
+            while (temp.next) {
+                index++;
+                if (nodeToFind.value === temp.next.value) {
+                    return index;
+                }
+                temp = temp.next;
+            }
+        }
     }
 
     print() {
@@ -52,8 +82,12 @@ class LinkedListNode {
 }
 
 const linkedList = new LinkedList();
+linkedList.addFirst(4);
 linkedList.addLast(5);
 linkedList.addLast(3);
-linkedList.addLast(63);
+linkedList.addFirst(63);
 linkedList.addLast(6);
+linkedList.deleteLast();
 linkedList.print();
+console.log('index ');
+console.log(linkedList.indexOf(3));
