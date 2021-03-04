@@ -63,6 +63,28 @@ class LinkedList {
         }
     }
 
+    reverse() {
+        let next = this.#first.next;
+        let next2;
+        
+        if (next) {
+            next2 = next.next;
+            let temp = this.#first;
+            this.#first = next;
+            next.next = temp;
+            this.#first.next.next = null;
+        }
+        
+        while(next2) {
+            let doubleNext = next2.next;
+            let temp = this.#first;
+            this.#first = next2;
+            next2.next = temp;
+
+            next2 = doubleNext;
+        }
+    }
+
     print() {
         let current = this.#first;
         while (current) {
@@ -82,12 +104,10 @@ class LinkedListNode {
 }
 
 const linkedList = new LinkedList();
-linkedList.addFirst(4);
 linkedList.addLast(5);
 linkedList.addLast(3);
-linkedList.addFirst(63);
 linkedList.addLast(6);
-linkedList.deleteLast();
+linkedList.addLast(10);
+linkedList.addFirst(7)
+linkedList.reverse();
 linkedList.print();
-console.log('index ');
-console.log(linkedList.indexOf(3));
