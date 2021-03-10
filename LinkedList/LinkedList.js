@@ -30,17 +30,44 @@ class LinkedList {
         temp = null;
     }
     
+    // deleteLast() {
+    //     let current = this.#first;
+    //     let beforeCurrent = this.#first;
+    //     if (current) {
+    //         while (current.next) {
+    //             beforeCurrent = current;
+    //             current = current.next;
+    //         }
+    //         beforeCurrent.next = null;
+    //     }
+    // }
+
+    isEmpty() {
+        return !this.#first;
+    }
+
     deleteLast() {
-        let current = this.#first;
-        let beforeCurrent = this.#first;
-        if (current) {
-            while (current.next) {
-                beforeCurrent = current;
-                current = current.next;
-            }
-            beforeCurrent.next = null;
+        if (this.isEmpty()) return null;
+    
+        if (this.#first === this.#last) this.#first = this.#last = null;
+        else {
+          const previous = this.#getPrevious(this.#last);
+          this.#last = previous;
+          this.#last.next = null;
         }
     }
+    
+    #getPrevious(node) {
+        let current = this.#first;
+    
+        while (current) {
+          if (current.next === node) return current;
+          current = current.next;
+        }
+    
+        return null;
+    }
+    
 
     contains(node) {
         const nodeToFind = new LinkedListNode(node);
@@ -85,6 +112,14 @@ class LinkedList {
         }
     }
 
+    getFirst() {
+        return this.#first.value;
+    }
+    
+    getLast() {
+        return this.#last.value;
+    }
+
     print() {
         let current = this.#first;
         while (current) {
@@ -103,11 +138,13 @@ class LinkedListNode {
     }
 }
 
-const linkedList = new LinkedList();
-linkedList.addLast(5);
-linkedList.addLast(3);
-linkedList.addLast(6);
-linkedList.addLast(10);
-linkedList.addFirst(7)
-linkedList.reverse();
-linkedList.print();
+module.exports = LinkedList;
+
+// const linkedList = new LinkedList();
+// linkedList.addLast(5);
+// linkedList.addLast(3);
+// linkedList.addLast(6);
+// linkedList.addLast(10);
+// linkedList.addFirst(7)
+// linkedList.reverse();
+// linkedList.print();
